@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gift Voucher – Kilo Seminyak</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', serif; background: #f0ebe0; color: #2a2a2a; }
+
+    .section-heading {
+      font-family: 'Inter', serif;
+      font-weight: 600;
+      font-size: 36px;
+      color: #000;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .section-subtext {
+      font-family: 'Inter', serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: #2a2a2a;
+    }
+
+    /* ── Fixed Top Navbar ── */
+    body { padding-top: 106px; }
+
+    .top-navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: #f0ebe0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+    }
+
+    .hamburger-btn {
+      position: fixed;
+      top: 12px;
+      left: 16px;
+      z-index: 1200;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #111;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .hamburger-btn span::before,
+    .hamburger-btn span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: #111;
+      transition: all 0.3s ease;
+    }
+    .hamburger-btn span::before { top: -6px; }
+    .hamburger-btn span::after  { top: 6px; }
+    .hamburger-btn.open span { background: transparent; }
+    .hamburger-btn.open span::before { transform: rotate(45deg); top: 0; background: #fff; }
+    .hamburger-btn.open span::after  { transform: rotate(-45deg); top: 0; background: #fff; }
+
+    /* ── Menu Sub-tabs Bar ── */
+    .menu-subnav {
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      z-index: 999;
+      background: #f0ebe0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 20px;
+      white-space: nowrap;
+    }
+    .menu-subnav::-webkit-scrollbar { display: none; }
+    .menu-subnav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      text-decoration: none;
+      padding: 0 14px;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .menu-subnav a:hover { color: #111; }
+    .menu-subnav a.active {
+      color: #111;
+      border-bottom-color: #111;
+      font-weight: 500;
+    }
+    .menu-subnav-sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .bg-cream { background-color: #f0ebe0; }
+
+    /* Menu Item Grid (card style) */
+    .menu-item-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+    }
+
+    .menu-item-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .menu-item-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+    }
+
+    .menu-item-img-wrap {
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+    }
+    .menu-item-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+      display: block;
+    }
+    .menu-item-card:hover .menu-item-img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .menu-item-body {
+      padding: 22px 24px 26px;
+    }
+    .menu-item-name {
+      font-family: 'Inter', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: 8px;
+    }
+    .menu-item-desc {
+      font-family: 'Inter', serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+    .menu-item-price {
+      font-family: 'Inter', serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #111;
+      letter-spacing: 0.04em;
+    }
+    .menu-item-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #c0392b;
+      border: 1px solid #e8c4c0;
+      background: #fdf2f2;
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 8px;
+    }
+
+    /* Category tabs */
+    .category-tabs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .cat-tab {
+      padding: 8px 22px;
+      border-radius: 50px;
+      border: 1px solid #ccc;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      color: #555;
+      transition: all 0.2s;
+    }
+    .cat-tab.active, .cat-tab:hover {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+
+    /* ── Category Sections ── */
+    .menu-category { margin-bottom: 64px; }
+    .menu-category:last-child { margin-bottom: 0; }
+
+    .category-heading {
+      font-family: 'Inter', serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .category-note {
+      font-size: 12px;
+      font-weight: 300;
+      color: #888;
+      letter-spacing: 0.06em;
+      margin-bottom: 32px;
+    }
+    .category-divider {
+      width: 40px;
+      height: 1.5px;
+      background: #111;
+      margin-bottom: 10px;
+    }
+
+    /* Sub-category label */
+    .subcategory-label {
+      grid-column: 1 / -1;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.38);
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 4px;
+    }
+
+    /* Text-only menu items (coffee, tea, juices) */
+    .text-menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .text-menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      gap: 12px;
+    }
+    .text-menu-item:last-child { border-bottom: none; }
+    .text-menu-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: 3px;
+    }
+    .text-menu-desc {
+      font-size: 12px;
+      font-weight: 300;
+      color: #888;
+      line-height: 1.5;
+    }
+    .text-menu-price {
+      font-size: 13px;
+      font-weight: 500;
+      color: #111;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+/* Gift Voucher Section */
+.gift-voucher {
+  background: #f4efe6;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.gift-logo {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.gift-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.gift-subtitle {
+  font-size: 14px;
+  color: #666;
+  letter-spacing: 0.08em;
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+.gift-image {
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.gift-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gift-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  background: #cfcac2;
+  color: #111;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+}
+
+.gift-btn:hover {
+  background: #111;
+  color: #fff;
+}
+
+.gift-note {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #888;
+}
+    /* Extras list */
+    .extras-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .extras-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      gap: 12px;
+    }
+    .extras-item:last-child { border-bottom: none; }
+    .extras-name {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #333;
+    }
+    .extras-price {
+      font-size: 13px;
+      font-weight: 500;
+      color: #111;
+      white-space: nowrap;
+    }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .lightbox-inner {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 620px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+    }
+    .lightbox-img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+    }
+    .lightbox-body {
+      padding: 28px 32px 32px;
+    }
+    .lightbox-name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    .lightbox-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: #666;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .lightbox-price {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Nav Overlay + Drawer */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1050;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+    .nav-drawer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 320px;
+      max-width: 88vw;
+      height: 100%;
+      background: #0a0a0a;
+      z-index: 1100;
+      transform: translateX(-100%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      padding: 80px 0 40px;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-logo { padding: 0 36px 32px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 16px; }
+    .nav-drawer-logo img { width: 110px; height: auto; }
+    .nav-item { position: relative; }
+    .nav-item > a,
+    .nav-item > span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 36px;
+      font-family: 'Inter', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-item > a:hover, .nav-item > span:hover { color: #fff; }
+    .nav-item > span i { font-size: 10px; transition: transform 0.25s; color: rgba(255,255,255,0.4); }
+    .nav-item.expanded > span i { transform: rotate(180deg); }
+    .nav-submenu { display: none; margin: 0; }
+    .nav-submenu.open { display: block; }
+    .nav-submenu a {
+      display: block;
+      padding: 14px 36px;
+      font-family: 'Inter', serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-submenu a:hover { background: #fff; color: #000; }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 36px; }
+
+    /* WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;
+      bottom: 28px;
+      z-index: 999;
+      width: 52px;
+      height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.6); animation: none; }
+    .whatsapp-float i { font-size: 26px; color: #fff; }
+    @keyframes waPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      70%  { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+
+
+
+    /* Footer */
+.footer {
+  background: #000;
+  padding: 70px 60px 40px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1.2fr;
+  gap: 60px;
+  margin-bottom: 50px;
+}
+
+/* BRAND */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer-brand img {
+  max-width: 180px;
+  display: block;
+}
+
+.footer-tagline {
+  margin-top: 18px;
+  font-size: 14px;
+color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+/* LINKS */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 15px;
+color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-links a:hover {
+color: rgba(255,255,255,0.9);
+  transform: translateX(3px);
+}
+
+/* TITLES */
+.footer-info-title {
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+color: rgba(255,255,255,0.9);
+  margin-bottom: 16px;
+}
+
+/* TEXT */
+.footer-info-text {
+  font-size: 15px;
+color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+}
+
+/* MAP */
+.footer-map {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.footer-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* BOTTOM */
+.footer-bottom {
+  border-top: 1px solid rgba(242,235,219,0.12);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socials a {
+color: rgba(255,255,255,0.9);
+  margin-right: 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.socials a:hover {
+color: rgba(255,255,255,0.9);
+  transform: translateY(-2px);
+}
+
+.copyright {
+  font-size: 12px;
+color: rgba(255,255,255,0.9);
+}
+    /* Pork icon badge */
+    .pork-icon {
+      color: #c0392b;
+      font-size: 11px;
+      margin-left: 4px;
+    }
+
+    /* Hours badge */
+    .hours-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #666;
+      background: rgba(0,0,0,0.05);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-bottom: 40px;
+    }
+    .hours-badge i { font-size: 11px; color: #888; }
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/6281246167618" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Fixed Top Navbar -->
+<header class="top-navbar"></header>
+
+<!-- Hamburger Button (fixed, always on top) -->
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu"><span></span></button>
+
+<!-- Menu Sub-nav Bar -->
+<div class="menu-subnav">
+  <a href="breakfast.html">Breakfast</a>
+  <a href="lunch.html">Lunch</a>
+  <a href="dinner.html">Dinner</a>
+  <a href="beverages.html">Beverages</a>
+    <a href="kids.html">Kids</a>
+  <a href="set-menu.html">Set Menu</a>
+  <a href="gift-voucher.html" class="active">Gift Voucher</a>
+</div>
+
+<!-- Nav Overlay -->
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- Nav Drawer -->
+<nav class="nav-drawer" id="navDrawer">
+ 
+  <div class="nav-item"><a href="index.html">Home</a></div>
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-menu">
+    <span>Menu <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-menu">
+      <a href="breakfast.html">Breakfast</a>
+      <a href="lunch.html">Lunch</a>
+      <a href="dinner.html">Dinner</a>
+      <a href="beverages.html">Beverages</a>
+          <a href="kids.html">Kids</a>
+      <a href="set-menu.html">Set Menu</a>
+      <a href="gift-voucher.html">Gift Voucher</a>
+    </div>
+  </div>
+
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-booking">
+    <span>Group Booking <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-booking">
+      <a href="group-booking.html">Group Booking</a>
+      <a href="private-space.html">Private Space</a>
+    </div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-item"><a href="kilo-at-home.html">Events &amp; Catering by Bespoke</a></div>
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-about">
+    <span>About <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-about">
+      <a href="our-story.html">Our Story</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="our-services.html">Our Services</a>
+    </div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-item"><a href="blog.html">Blog</a></div>
+</nav>
+
+<!-- ═══════════════════════════════════ MAIN CONTENT ═══════════════════════════════════ -->
+<section style="max-width:1180px; margin:0 auto; padding: 60px 40px 100px;">
+
+
+  <div class="gift-image">
+    <img src="https://kiloseminyak.com/wp-content/uploads/elementor/thumbs/website2025_currency-min-rg1a2h6uxn4dqcl2zxbmjw3epecaqqpa4whdtm6xd6.jpg" alt="Kilo Gift Voucher">
+  </div>
+
+
+</section>
+
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()"><i class="fas fa-times"></i></button>
+  <div class="lightbox-inner">
+    <img class="lightbox-img" id="lbImg" src="" alt="">
+    <div class="lightbox-body">
+      <div class="lightbox-name" id="lbName"></div>
+      <div class="lightbox-desc" id="lbDesc"></div>
+      <div class="lightbox-price" id="lbPrice"></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- Logo + tagline -->
+    <div class="footer-brand">
+      <img src="https://kiloseminyak.com/wp-content/uploads/2023/12/TC_white_winner-gif_L_2024.gif">
+      <div class="footer-tagline">We are honored to be included<br> among travelers favorites <br/>3 years in a row</div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <div class="footer-info-title">Discover</div>
+      <div class="footer-links">
+        <a href="#">RSVP</a>
+        <a href="#">Menu</a>
+        <a href="#">Group Booking</a>
+        <a href="#">Events &amp; Catering by Bespoke</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div class="footer-info-title">Contact</div>
+      <div class="footer-info-text">
+        office@kilobali.com<br>
+        +62 812 4616 7618
+      </div>
+    </div>
+
+    <!-- Map (small) -->
+    <div>
+      <div class="footer-info-title">Location</div>
+      
+      <div class="footer-map">
+        <iframe 
+          src="https://maps.google.com/maps?q=Kilo%20Kitchen%20Bali&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:12px; color: rgba(255,255,255,0.9); margin-top:12px; line-height:1.6; text-align: center;">Jl. Drupadi No.22, Seminyak, Kec. Kuta, Kabupaten Badung, Bali 80361</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="footer-bottom">
+    <div class="socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <div class="copyright">
+      Copyright © 2026 Kilo Seminyak
+    </div>
+  </div>
+
+</footer>
+
+
+<script>
+  // Hamburger
+  const btn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  function openMenu() { btn.classList.add('open'); drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu() { btn.classList.remove('open'); drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
+  btn.addEventListener('click', () => drawer.classList.contains('open') ? closeMenu() : openMenu());
+  overlay.addEventListener('click', closeMenu);
+
+  const submenus = [
+    { item: 'item-menu', sub: 'sub-menu' },
+    { item: 'item-booking', sub: 'sub-booking' },
+    { item: 'item-about', sub: 'sub-about' },
+  ];
+  submenus.forEach(({ item, sub }) => {
+    const el = document.getElementById(item);
+    const subEl = document.getElementById(sub);
+    if (el && subEl) {
+      el.querySelector('span').addEventListener('click', () => {
+        const isOpen = subEl.classList.contains('open');
+        document.querySelectorAll('.nav-submenu').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('expanded'));
+        if (!isOpen) { subEl.classList.add('open'); el.classList.add('expanded'); }
+      });
+    }
+  });
+
+  // Lightbox
+  function openLightbox(name, desc, price, img) {
+    document.getElementById('lbName').textContent = name;
+    document.getElementById('lbDesc').textContent = desc;
+    document.getElementById('lbPrice').textContent = price;
+    document.getElementById('lbImg').src = img;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeLightboxOutside(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+</script>
+</body>
+</html>
