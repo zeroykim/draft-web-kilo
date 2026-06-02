@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Services – Kilo Seminyak</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', serif; background: #f0ebe0; color: #2a2a2a; }
+
+    .section-heading {
+      font-family: 'Inter', serif;
+      font-weight: 600;
+      font-size: 36px;
+      color: #000;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .section-subtext {
+      font-family: 'Inter', serif;
+      font-weight: 300;
+      font-size: 15px;
+      color: #2a2a2a;
+    }
+
+    /* ── Fixed Top Navbar ── */
+    body { padding-top: 106px; }
+
+    .top-navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: #f0ebe0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+    }
+
+    .hamburger-btn {
+      position: fixed;
+      top: 12px;
+      left: 16px;
+      z-index: 1200;
+      background: none;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.3s ease, border 0.3s ease;
+    }
+    .hamburger-btn span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #111;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .hamburger-btn span::before,
+    .hamburger-btn span::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: #111;
+      transition: all 0.3s ease;
+    }
+    .hamburger-btn span::before { top: -6px; }
+    .hamburger-btn span::after  { top: 6px; }
+    .hamburger-btn.open span { background: transparent; }
+    .hamburger-btn.open span::before { transform: rotate(45deg); top: 0; background: #fff; }
+    .hamburger-btn.open span::after  { transform: rotate(-45deg); top: 0; background: #fff; }
+
+    /* ── Menu Sub-tabs Bar ── */
+    .menu-subnav {
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      z-index: 999;
+      background: #f0ebe0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 20px;
+      white-space: nowrap;
+    }
+    .menu-subnav::-webkit-scrollbar { display: none; }
+    .menu-subnav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      text-decoration: none;
+      padding: 0 14px;
+      height: 100%;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+    .menu-subnav a:hover { color: #111; }
+    .menu-subnav a.active {
+      color: #111;
+      border-bottom-color: #111;
+      font-weight: 500;
+    }
+    .menu-subnav-sep {
+      width: 1px;
+      height: 14px;
+      background: rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+
+    .bg-cream { background-color: #f0ebe0; }
+
+    /* SERVICE BLOCKS */
+    .service-block { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 80px; }
+    .service-block.reverse { direction: rtl; }
+    .service-block.reverse > * { direction: ltr; }
+    .service-img { border-radius: 20px; overflow: hidden; }
+    .service-img img { width: 100%; height: 380px; object-fit: cover; display: block; border-radius: 20px; transition: transform .5s; }
+    .service-img:hover img { transform: scale(1.03); }
+    .service-num { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: #aaa; margin-bottom: 14px; }
+    .service-title { font-size: 28px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; color: #111; margin-bottom: 16px; line-height: 1.2; }
+    .service-desc { font-size: 15px; font-weight: 300; color: #666; line-height: 1.8; margin-bottom: 24px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .service-tag { background: #fff; border-radius: 50px; padding: 6px 16px; font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #555; }
+    .dark-pill-btn { background: #111; color: #fff; border: none; padding: 14px 32px; border-radius: 50px; font-size: 11px; font-weight: 500; letter-spacing: .15em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: background .2s; }
+    .dark-pill-btn:hover { background: #333; }
+
+    /* DARK STATS BANNER */
+    .stats-banner { background: #111; border-radius: 24px; margin: 0 48px 72px; padding: 56px 64px; display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; text-align: center; }
+    .stat-num { font-size: 48px; font-weight: 700; color: #fff; line-height: 1; margin-bottom: 8px; }
+    .stat-label { font-size: 11px; font-weight: 400; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+
+    /* FAQ */
+    .faq-item { border-bottom: 1px solid rgba(0,0,0,.1); padding: 22px 0; cursor: pointer; }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; }
+    .faq-question { font-size: 16px; font-weight: 500; color: #111; }
+    .faq-icon { font-size: 13px; color: #888; transition: transform .3s; }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+    .faq-answer { font-size: 14px; font-weight: 300; color: #666; line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .35s; }
+    .faq-item.open .faq-answer { max-height: 200px; padding-top: 14px; }
+
+
+
+
+    /* Nav Overlay + Drawer */
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1050;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+    .nav-drawer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 320px;
+      max-width: 88vw;
+      height: 100%;
+      background: #0a0a0a;
+      z-index: 1100;
+      transform: translateX(-100%);
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      overflow-y: auto;
+      padding: 80px 0 40px;
+    }
+    .nav-drawer.open { transform: translateX(0); }
+    .nav-drawer-logo { padding: 0 36px 32px; border-bottom: 1px solid rgba(255,255,255,0.07); margin-bottom: 16px; }
+    .nav-drawer-logo img { width: 110px; height: auto; }
+    .nav-item { position: relative; }
+    .nav-item > a,
+    .nav-item > span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 36px;
+      font-family: 'Inter', serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-item > a:hover, .nav-item > span:hover { color: #fff; }
+    .nav-item > span i { font-size: 10px; transition: transform 0.25s; color: rgba(255,255,255,0.4); }
+    .nav-item.expanded > span i { transform: rotate(180deg); }
+    .nav-submenu { display: none; margin: 0; }
+    .nav-submenu.open { display: block; }
+    .nav-submenu a {
+      display: block;
+      padding: 14px 36px;
+      font-family: 'Inter', serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-submenu a:hover { background: #fff; color: #000; }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 8px 36px; }
+
+    /* WhatsApp */
+    .whatsapp-float {
+      position: fixed;
+      right: 20px;
+      bottom: 28px;
+      z-index: 999;
+      width: 52px;
+      height: 52px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.6); animation: none; }
+    .whatsapp-float i { font-size: 26px; color: #fff; }
+    @keyframes waPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      70%  { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+
+
+
+    /* Footer */
+.footer {
+  background: #000;
+  padding: 70px 60px 40px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr 1.2fr;
+  gap: 60px;
+  margin-bottom: 50px;
+}
+
+/* BRAND */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer-brand img {
+  max-width: 180px;
+  display: block;
+}
+
+.footer-tagline {
+  margin-top: 18px;
+  font-size: 14px;
+color: rgba(255,255,255,0.9);
+  line-height: 1.6;
+  max-width: 300px;
+}
+
+/* LINKS */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 15px;
+color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-links a:hover {
+color: rgba(255,255,255,0.9);
+  transform: translateX(3px);
+}
+
+/* TITLES */
+.footer-info-title {
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+color: rgba(255,255,255,0.9);
+  margin-bottom: 16px;
+}
+
+/* TEXT */
+.footer-info-text {
+  font-size: 15px;
+color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+}
+
+/* MAP */
+.footer-map {
+  width: 100%;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.footer-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* BOTTOM */
+.footer-bottom {
+  border-top: 1px solid rgba(242,235,219,0.12);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.socials a {
+color: rgba(255,255,255,0.9);
+  margin-right: 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.socials a:hover {
+color: rgba(255,255,255,0.9);
+  transform: translateY(-2px);
+}
+
+.copyright {
+  font-size: 12px;
+color: rgba(255,255,255,0.9);
+}
+
+  
+  /* =========================================================
+     TABLET (max-width: 1024px)  — our-services.html
+  ========================================================= */
+  @media (max-width: 1024px) {
+    
+    /* Top content: breathing room */
+    section:first-of-type, .bg-cream:first-of-type { padding-top: 36px !important; }
+    /* Our Services – service block 2→1 col */
+    .service-block { grid-template-columns: 1fr; gap: 32px; margin-bottom: 56px; }
+    .service-block.reverse { direction: ltr; }
+    .service-img img { height: 300px; }
+    .service-desc { text-align: justify; }
+    section[style] { padding: 48px 32px !important; }
+    
+    /* Footer */
+    .footer { padding: 56px 40px 32px; }
+    .footer-container { grid-template-columns: 1fr 1fr; gap: 40px; }
+    /* Dark card */
+    .dark-card { margin: 0 24px 64px; height: auto; flex-direction: column; }
+    .dark-card .img-side { width: 100%; height: 280px; }
+    .dark-card .text-side { width: 100%; padding: 40px 32px; }
+    /* Stats banner */
+    .stats-banner { margin: 0 24px 72px; padding: 40px 36px; grid-template-columns: repeat(2, 1fr); }
+  }
+
+
+  /* =========================================================
+     MOBILE (max-width: 768px)  — our-services.html
+  ========================================================= */
+  @media (max-width: 768px) {
+    body { padding-top: 72px; }
+    .section-heading { font-size: 26px; }
+    .section-subtext  { font-size: 14px; }
+    .top-navbar { padding: 0 16px; }
+    .menu-subnav { justify-content: flex-start; padding: 0 12px; }
+    /* Footer */
+    .footer { padding: 48px 20px 28px; }
+    .footer-container { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+    .footer-brand { align-items: center; }
+    .footer-links { align-items: center; }
+    .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    .socials { text-align: center; }
+    /* Dark card */
+    .dark-card { margin: 0 16px 48px; flex-direction: column; height: auto; border-radius: 16px; }
+    .dark-card .img-side { width: 100%; height: 220px; }
+    .dark-card .text-side { width: 100%; padding: 32px 24px; }
+    .dark-card .text-side h3 { font-size: 18px; }
+    .dark-card .text-side p  { font-size: 14px; }
+    /* Stats banner */
+    .stats-banner { margin: 0 16px 48px; padding: 32px 24px; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .stat-num { font-size: 36px; }
+    /* WhatsApp FAB */
+    .whatsapp-float { right: 14px; bottom: 20px; width: 46px; height: 46px; }
+    
+    /* Top content: breathing room */
+    body { padding-top: 106px; }
+    section:first-of-type, .bg-cream:first-of-type { padding-top: 40px !important; }
+    /* Our Services */
+    .service-block { grid-template-columns: 1fr; gap: 24px; margin-bottom: 40px; }
+    /* Description justify */
+    .service-desc { text-align: justify; }
+    .service-img img { height: 240px; }
+    .service-title { font-size: 22px; }
+    section[style] { padding: 36px 16px !important; }
+    
+  }
+
+  </style>
+</head>
+<body>
+
+<!-- WhatsApp -->
+<a href="https://wa.me/6281246167618" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Fixed Top Navbar -->
+<header class="top-navbar"></header>
+
+<!-- Hamburger Button (fixed, always on top) -->
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu"><span></span></button>
+
+<!-- Menu Sub-nav Bar -->
+<div class="menu-subnav">
+  <a href="our-story.html">Our Story</a>
+  <a href="our-team.html">Our Team</a>
+  <a href="our-services.html" class="active">Our Services</a>
+</div>
+
+<!-- Nav Overlay -->
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- Nav Drawer -->
+<nav class="nav-drawer" id="navDrawer">
+ 
+  <div class="nav-item"><a href="index.html">Home</a></div>
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-menu">
+    <span>Menu <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-menu">
+      <a href="breakfast.html">Breakfast</a>
+      <a href="lunch.html">Lunch</a>
+      <a href="dinner.html">Dinner</a>
+      <a href="beverages.html">Beverages</a>
+      <a href="kids.html">Kids</a>
+      <a href="set-menu.html">Set Menu</a>
+      <a href="gift-voucher.html">Gift Voucher</a>
+    </div>
+  </div>
+
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-booking">
+    <span>Group Booking <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-booking">
+      <a href="group-booking.html">Group Booking</a>
+      <a href="private-space.html">Private Space</a>
+    </div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-item"><a href="kilo-at-home.html">Events &amp; Catering by Bespoke</a></div>
+  <div class="nav-divider"></div>
+  <div class="nav-item" id="item-about">
+    <span>About <i class="fas fa-chevron-down"></i></span>
+    <div class="nav-submenu" id="sub-about">
+      <a href="our-story.html">Our Story</a>
+      <a href="our-team.html">Our Team</a>
+      <a href="our-services.html">Our Services</a>
+    </div>
+  </div>
+  <div class="nav-divider"></div>
+  <div class="nav-item"><a href="blog.html">Blog</a></div>
+</nav>
+
+<!-- ═══════════════════════════════════ MAIN CONTENT ═══════════════════════════════════ -->
+<section class="bg-cream" style="padding:64px 48px 64px;">
+  <div style="max-width:700px;margin:0 auto;text-align:center;">
+    <h2 class="section-heading" style="margin-bottom:14px;">EVERYTHING WE OFFER</h2>
+    <p class="section-subtext">From daily dining to exclusive events — Kilo Seminyak delivers a complete hospitality experience. Here's a full look at what we do and how we can serve you.</p>
+  </div>
+</section>
+
+<!-- SERVICE BLOCKS -->
+<section class="bg-cream" style="padding:0 48px 0;">
+
+  <div class="service-block">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Dine In"></div>
+    <div>
+      <div class="service-num">01</div>
+      <div class="service-title">Dine In</div>
+      <div class="service-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      <div class="service-tags"><span class="service-tag">Open Daily</span><span class="service-tag">7AM – 11PM</span><span class="service-tag">Reservations Welcome</span><span class="service-tag">Walk-ins Available</span></div>
+      <a href="try3fix.html" class="dark-pill-btn">View Menu</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Group Booking"></div>
+    <div>
+      <div class="service-num">02</div>
+      <div class="service-title">Group Booking</div>
+      <div class="service-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      <div class="service-tags"><span class="service-tag">10–200 Guests</span><span class="service-tag">Custom Menus</span><span class="service-tag">Dedicated Coordinator</span><span class="service-tag">AV &amp; Entertainment</span></div>
+      <a href="group-booking.html" class="dark-pill-btn">Learn More</a>
+    </div>
+  </div>
+
+  <div class="service-block">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Dine In"></div>
+    <div>
+      <div class="service-num">03</div>
+      <div class="service-title">FREE VALET PARKING</div>
+      <div class="service-desc">At Kilo Seminyak, we believe in providing an exceptional dining experience from the moment you arrive. As part of our commitment to ensuring your visit is hassle-free and enjoyable, we are pleased to offer complimentary valet parking for our guests. Simply drive up, and our professional valets will take care of the rest, allowing you to focus on indulging in our delicious cuisine and soaking in the inviting atmosphere. We look forward to welcoming you soon!</div>
+      <div class="service-tags"><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span></div>
+      <a href="try3fix.html" class="dark-pill-btn">Lorem</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Group Booking"></div>
+    <div>
+      <div class="service-num">04</div>
+      <div class="service-title">FREE VALET LUGGAGE</div>
+      <div class="service-desc">We understand that travel can sometimes be cumbersome. To enhance your dining experience with us, we proudly offer luggage valet services for our guests. Simply entrust your bags with our attentive staff upon arrival, and we’ll ensure they are safely stored until you’re ready to retrieve them. This service is designed to provide you with the utmost convenience, allowing you to dine and relax without the weight of your luggage. Join us, and let us take care of the details while you savor our exquisite dishes and warm hospitality.</div>
+      <div class="service-tags"><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span><span class="service-tag">Lorem</span></div>
+      <a href="group-booking.html" class="dark-pill-btn">Lorem</a>
+    </div>
+  </div>
+
+  <div class="service-block">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Private Space"></div>
+    <div>
+      <div class="service-num">05</div>
+      <div class="service-title">Private Space</div>
+      <div class="service-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      <div class="service-tags"><span class="service-tag">4 Distinct Spaces</span><span class="service-tag">Up to 200 Guests</span><span class="service-tag">Custom Décor</span><span class="service-tag">Full Privacy</span></div>
+      <a href="private-space.html" class="dark-pill-btn">Explore Spaces</a>
+    </div>
+  </div>
+
+  <div class="service-block reverse">
+    <div class="service-img"><img src="https://kiloseminyak.com/wp-content/uploads/2024/04/parking1-1.jpg" alt="Bespoke Catering"></div>
+    <div>
+      <div class="service-num">06</div>
+      <div class="service-title">Events &amp; Catering by Bespoke</div>
+      <div class="service-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+      <div class="service-tags"><span class="service-tag">Villa Dining</span><span class="service-tag">Weddings</span><span class="service-tag">Corporate</span><span class="service-tag">Anywhere in Bali</span></div>
+      <a href="kilo-at-home.html" class="dark-pill-btn">Request a Proposal</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- STATS -->
+<div class="stats-banner">
+  <div><div class="stat-num">60+</div><div class="stat-label">Team Members</div></div>
+  <div><div class="stat-num">10K+</div><div class="stat-label">Guests Per Month</div></div>
+  <div><div class="stat-num">500+</div><div class="stat-label">Events Hosted</div></div>
+  <div><div class="stat-num">12</div><div class="stat-label">Years in Seminyak</div></div>
+</div>
+
+<!-- FAQ -->
+<section class="bg-cream" style="padding:0 48px 80px;">
+  <div style="max-width:700px;margin:0 auto 48px;text-align:center;">
+    <h2 class="section-heading" style="margin-bottom:14px;">FREQUENTLY ASKED</h2>
+  </div>
+  <div style="max-width:800px;margin:0 auto;">
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q"><span class="faq-question">Lorem ipsum?</span><i class="fas fa-chevron-down faq-icon"></i></div>
+      <div class="faq-answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+
+  <div class="footer-container">
+
+    <!-- Logo + tagline -->
+    <div class="footer-brand">
+      <img src="https://kiloseminyak.com/wp-content/uploads/2023/12/TC_white_winner-gif_L_2024.gif">
+      <div class="footer-tagline">We are honored to be included<br> among travelers favorites <br/>3 years in a row</div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <div class="footer-info-title">Discover</div>
+      <div class="footer-links">
+        <a href="#">RSVP</a>
+        <a href="#">Menu</a>
+        <a href="#">Group Booking</a>
+        <a href="#">Events &amp; Catering by Bespoke</a>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div class="footer-info-title">Contact</div>
+      <div class="footer-info-text">
+        office@kilobali.com<br>
+        +62 812 4616 7618
+      </div>
+    </div>
+
+    <!-- Map (small) -->
+    <div>
+      <div class="footer-info-title">Location</div>
+      
+      <div class="footer-map">
+        <iframe 
+          src="https://maps.google.com/maps?q=Kilo%20Kitchen%20Bali&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          loading="lazy">
+        </iframe>
+      </div>
+      <div style="font-size:12px; color: rgba(255,255,255,0.9); margin-top:12px; line-height:1.6; text-align: center;">Jl. Drupadi No.22, Seminyak, Kec. Kuta, Kabupaten Badung, Bali 80361</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="footer-bottom">
+    <div class="socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+    </div>
+
+    <div class="copyright">
+      Copyright © 2026 Kilo Seminyak
+    </div>
+  </div>
+
+</footer>
+
+
+<script>
+  // Hamburger
+  const btn = document.getElementById('hamburgerBtn');
+  const drawer = document.getElementById('navDrawer');
+  const overlay = document.getElementById('navOverlay');
+  function openMenu() { btn.classList.add('open'); drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeMenu() { btn.classList.remove('open'); drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; }
+  btn.addEventListener('click', () => drawer.classList.contains('open') ? closeMenu() : openMenu());
+  overlay.addEventListener('click', closeMenu);
+
+  const submenus = [
+    { item: 'item-menu', sub: 'sub-menu' },
+    { item: 'item-booking', sub: 'sub-booking' },
+    { item: 'item-about', sub: 'sub-about' },
+  ];
+  submenus.forEach(({ item, sub }) => {
+    const el = document.getElementById(item);
+    const subEl = document.getElementById(sub);
+    if (el && subEl) {
+      el.querySelector('span').addEventListener('click', () => {
+        const isOpen = subEl.classList.contains('open');
+        document.querySelectorAll('.nav-submenu').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('expanded'));
+        if (!isOpen) { subEl.classList.add('open'); el.classList.add('expanded'); }
+      });
+    }
+  });
+</script>
+
+<script>
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+
+      faqItems.forEach(i => i.classList.remove('open'));
+
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
